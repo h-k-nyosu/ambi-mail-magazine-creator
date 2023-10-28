@@ -11,10 +11,40 @@ datasource db {
 }
 
 model Example {
-    id        Int      @id @default(autoincrement())
-    name      String
+    id        String   @id @default(cuid())
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+}
 
-    @@index([name])
+model Newsletter {
+    id   Int  @id @default(autoincrement())
+    Job  Job[]
+}
+
+model Job {
+    id            Int      @id @default(autoincrement())
+    newsletterId  Int
+    url           String
+    companyName   String
+    content       String
+    Newsletter    Newsletter @relation(fields: [newsletterId], references: [id])
+    JobEvidence   JobEvidence[]
+    JobAttractiveEvidence JobAttractiveEvidence[]
+}
+
+model JobEvidence {
+    id        Int    @id @default(autoincrement())
+    jobId     Int    @unique
+    companyName String
+    jobName   String
+    income    String
+    location  String
+    Job       Job    @relation(fields: [jobId], references: [id])
+}
+
+model JobAttractiveEvidence {
+    id        Int   @id @default(autoincrement())
+    jobId     Int
+    attractivePoint String
+    Job       Job    @relation(fields: [jobId], references: [id])
 }

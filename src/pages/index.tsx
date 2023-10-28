@@ -14,15 +14,11 @@ type JobData = RouterOutput["job"]["fetchData"];
 export default function Home() {
   const [url, setUrl] = useState("");
   const [jobs, setJobs] = useState<JobData[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const jobQuery = api.job.fetchData.useQuery({ url }, { enabled: !!url });
-  const createContentMutation = api.job.createContent.useMutation({
-    onSuccess: () => {
-      // ミューテーションが成功したら、content/resultページに遷移
-      router.push("/content/result");
-    },
-  });
+  const createContentMutation = api.job.createContent.useMutation({});
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,9 +42,22 @@ export default function Home() {
     }
   };
 
-  const handleCreate = () => {
-    // jobsをcreateContentに渡す
-    createContentMutation.mutate(jobs);
+  const handleCreate = async () => {
+    setIsLoading(true);
+    let newsletterId: number | undefined;
+
+    for (const job of jobs) {
+      const result = await createContentMutation.mutateAsync({
+        ...job,
+        newsletterId,
+      });
+
+      newsletterId = result.newsletterId;
+    }
+
+    setIsLoading(false);
+    console.log(newsletterId);
+    router.push(`/content/${newsletterId}`);
   };
 
   const handleDelete = (index: number) => {
@@ -167,7 +176,7 @@ export default function Home() {
             <span className="px-1"></span>作成
           </button>
         </div>
-        {createContentMutation.isLoading && (
+        {isLoading && (
           <div
             style={{
               position: "fixed",
