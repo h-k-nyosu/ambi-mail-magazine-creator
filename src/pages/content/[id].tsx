@@ -40,26 +40,21 @@ export default function Result() {
             </h2>
           </div>
           <div className="m-auto w-11/12 overflow-auto rounded-lg bg-white p-4 shadow">
-            <div className="mb-2 flex justify-end">
+            {/* <div className="mb-2 flex justify-end">
               <button
                 onClick={handleCopy}
                 className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none active:bg-blue-800"
               >
                 Copy
               </button>
-            </div>
+            </div> */}
             <div
               className="h-full w-full overflow-auto border border-gray-200 bg-white p-4"
               contentEditable
               suppressContentEditableWarning
               dangerouslySetInnerHTML={{
-                __html: data?.contents
-                  .map((content) => content.content)
-                  .join("<br />")
-                  ? data.contents
-                      .map((content) => content.content)
-                      .join("<br /><br /><br />")
-                      .replace(/\n/g, "<br />")
+                __html: data?.mailContent
+                  ? data.mailContent.replace(/\n/g, "<br />")
                   : "",
               }}
             />
@@ -74,16 +69,41 @@ export default function Result() {
           </div>
 
           {data?.contents.map((contentObj, index) => (
-            <div className="m-auto mx-5 mb-5 w-11/12 overflow-auto rounded-lg bg-white p-4 shadow">
-              <div key={index} className="mx-10">
-                <h3 className="text-left text-lg font-bold">会社名</h3>
-                <div className="mb-4">✅ {contentObj.companyName}</div>
-                <h3 className="text-lg font-bold">ここがポイント</h3>
-                {contentObj.attractivePoints.map((excerpt, index) => (
-                  <div key={index} className=" text-left">
-                    ✅ {excerpt}
+            <div
+              key={index}
+              className="m-auto mx-5 mb-5 w-11/12 overflow-auto rounded-lg bg-white p-6 shadow-xl"
+            >
+              <div className="mx-10">
+                {contentObj.jobEvidence.map((evidence, index) => (
+                  <div key={index}>
+                    <div className="mb-2 font-bold">
+                      ✅ {evidence.companyName}
+                    </div>
+                    <div className="mb-2">✅ {evidence.jobName}</div>
+                    <hr className="my-2" />
+                    <h3 className="font-bold">ここがポイント</h3>
+                    {contentObj.attractivePoints.map((point, index) => (
+                      <div key={index} className="mb-2 text-left">
+                        ✅ {point}
+                      </div>
+                    ))}
+                    <hr className="my-2" />
+                    <div className="mb-2">[年　収] ✅ {evidence.income}</div>
+                    <div className="mb-2 text-left">
+                      [勤務地] ✅ {contentObj.jobLocationEvidence.join("／✅")}
+                    </div>
                   </div>
                 ))}
+                <div className="flex justify-end">
+                  <a
+                    href={contentObj.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 text-gray-500 underline "
+                  >
+                    求人を確認する
+                  </a>
+                </div>
               </div>
             </div>
           ))}

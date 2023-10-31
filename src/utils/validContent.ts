@@ -1,13 +1,11 @@
-// utils/validContent.ts
-
-export function getValidAttractiveContent(attractiveContentResponse: string, jobContent: string): string[] {
-    const attractiveContents = attractiveContentResponse.split("\n");
-    let validAttractiveContent = [];
-    for (const content of attractiveContents) {
+export function getValidContent(contentResponse: string, jobContent: string): string[] {
+    const contents = contentResponse.split("\n");
+    let validContent = [];
+    for (const content of contents) {
         if (jobContent.replace(/\n/g, '').replace(/\s/g, '').includes(content)) {
-            console.log("✅魅力的な文章の抜粋: " + content);
-            validAttractiveContent.push(content);
+            console.log("✅有効なコンテンツ: " + content);
+            validContent.push(content);
         }
     }
-    return validAttractiveContent;
+    return validContent;
 }

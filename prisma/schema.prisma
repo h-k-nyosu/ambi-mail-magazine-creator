@@ -10,12 +10,6 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
-
 model Newsletter {
     id   Int  @id @default(autoincrement())
     Job  Job[]
@@ -24,12 +18,16 @@ model Newsletter {
 model Job {
     id            Int      @id @default(autoincrement())
     newsletterId  Int
-    url           String
     companyName   String
-    content       String
+    jobName       String
+    attractiveContent String
+    income        String
+    location      String
+    url           String
     Newsletter    Newsletter @relation(fields: [newsletterId], references: [id])
     JobEvidence   JobEvidence[]
     JobAttractiveEvidence JobAttractiveEvidence[]
+    JobLocationEvidence JobLocationEvidence[]
 }
 
 model JobEvidence {
@@ -38,7 +36,6 @@ model JobEvidence {
     companyName String
     jobName   String
     income    String
-    location  String
     Job       Job    @relation(fields: [jobId], references: [id])
 }
 
@@ -46,5 +43,12 @@ model JobAttractiveEvidence {
     id        Int   @id @default(autoincrement())
     jobId     Int
     attractivePoint String
+    Job       Job    @relation(fields: [jobId], references: [id])
+}
+
+model JobLocationEvidence {
+    id        Int   @id @default(autoincrement())
+    jobId     Int
+    location  String
     Job       Job    @relation(fields: [jobId], references: [id])
 }
