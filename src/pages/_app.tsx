@@ -6,9 +6,9 @@ import { api } from "~/utils/api";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
-    <div className="flex h-screen">
-      <Sidebar /> {/* サイドバーを追加 */}
-      <div className="flex-grow">
+    <div className="flex">
+      <Sidebar />
+      <div className="ml-60 flex-grow">
         <Component {...pageProps} />
       </div>
     </div>

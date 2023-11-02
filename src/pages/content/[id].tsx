@@ -6,15 +6,15 @@ export default function Result() {
   const {
     query: { id },
   } = router;
-  const { data } = api.job.fetchNewsletterContent.useQuery(
+  const { data } = api.magazine.fetchContent.useQuery(
     { id: Number(id) },
     { enabled: !!id },
   );
 
   return (
-    <div className="h-screen">
+    <div className="ml-auto w-auto">
       <div className="flex">
-        <div className="h-screen bg-blue-100 ">
+        <div className="w-1/2 bg-blue-100 ">
           <div className="flex h-36 items-center justify-center  p-4">
             <h2 className="text-center text-lg font-bold">
               メルマガ内容を生成しました。<br></br>
@@ -23,7 +23,7 @@ export default function Result() {
           </div>
           <div className="m-auto w-11/12 overflow-auto rounded-lg bg-white p-4 shadow">
             <div
-              className="h-full w-full overflow-auto border border-gray-200 bg-white p-4"
+              className=" overflow-auto border border-gray-200 bg-white p-4"
               contentEditable
               suppressContentEditableWarning
               dangerouslySetInnerHTML={{
@@ -34,8 +34,8 @@ export default function Result() {
             />
           </div>
         </div>
-        <div className="h-screen overflow-auto bg-green-100">
-          <div className="flex h-36 items-center justify-center  p-4">
+        <div className="w-1/2 overflow-auto bg-green-100">
+          <div className="flex h-36  items-center justify-center  p-4">
             <h2 className="text-center text-lg font-bold">
               以下に表示されている文言は、<br></br>
               求人原稿に書かれていることをシステムでチェックしてあります。

@@ -18,7 +18,7 @@ export default function Home() {
   const router = useRouter();
 
   const jobQuery = api.job.fetchData.useQuery({ url }, { enabled: !!url });
-  const createContentMutation = api.job.createContent.useMutation({});
+  const createContentMutation = api.magazine.createContent.useMutation({});
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
