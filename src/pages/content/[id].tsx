@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 
@@ -12,27 +11,10 @@ export default function Result() {
     { enabled: !!id },
   );
 
-  const handleCopy = async () => {
-    await navigator.clipboard.writeText(
-      data?.contents.map((content) => content.content).join("\n")
-        ? data.contents.map((content) => content.content).join("\n\n\n")
-        : "",
-    );
-    alert("テキストがクリップボードにコピーされました");
-  };
-
   return (
-    <div className="min-h-full">
-      <div className="shadow-offset-bottom-right w-full bg-white p-4 shadow-lg">
-        <Link
-          href="/"
-          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"
-        >
-          ホームに戻る
-        </Link>
-      </div>
+    <div className="h-screen">
       <div className="flex">
-        <div className="min-h-full w-1/2 bg-blue-100 ">
+        <div className="h-screen bg-blue-100 ">
           <div className="flex h-36 items-center justify-center  p-4">
             <h2 className="text-center text-lg font-bold">
               メルマガ内容を生成しました。<br></br>
@@ -40,14 +22,6 @@ export default function Result() {
             </h2>
           </div>
           <div className="m-auto w-11/12 overflow-auto rounded-lg bg-white p-4 shadow">
-            {/* <div className="mb-2 flex justify-end">
-              <button
-                onClick={handleCopy}
-                className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none active:bg-blue-800"
-              >
-                Copy
-              </button>
-            </div> */}
             <div
               className="h-full w-full overflow-auto border border-gray-200 bg-white p-4"
               contentEditable
@@ -60,7 +34,7 @@ export default function Result() {
             />
           </div>
         </div>
-        <div className="min-h-full w-1/2 overflow-auto bg-green-100">
+        <div className="h-screen overflow-auto bg-green-100">
           <div className="flex h-36 items-center justify-center  p-4">
             <h2 className="text-center text-lg font-bold">
               以下に表示されている文言は、<br></br>
@@ -71,9 +45,9 @@ export default function Result() {
           {data?.contents.map((contentObj, index) => (
             <div
               key={index}
-              className="m-auto mx-5 mb-5 w-11/12 overflow-auto rounded-lg bg-white p-6 shadow-xl"
+              className="m-auto mb-5 w-11/12 overflow-auto rounded-lg bg-white p-6 px-5 shadow-xl"
             >
-              <div className="mx-10">
+              <div className="px-10">
                 {contentObj.jobEvidence.map((evidence, index) => (
                   <div key={index}>
                     <div className="mb-2 font-bold">
